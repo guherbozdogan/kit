@@ -100,8 +100,7 @@ func BufferedStream(buffered bool) ClientOption {
 func (c Client) BufferedStreamHandler(ctx context.Context,r  *http.Response){
 	//rs,err:=c.frameIO.Read(ctx, r.Body,c.decFrame)
 	c.frameIO.Read(ctx, r.Body,c.decFrame)
-	
-	//some error handling for err.
+		//some error handling for err.
 }
 // Endpoint returns a usable endpoint that invokes the remote endpoint.
 func (c Client) Endpoint() endpoint.Endpoint {
