@@ -12,6 +12,7 @@ import (
 	"golang.org/x/net/context/ctxhttp"
 
 	"github.com/go-kit/kit/endpoint"
+	frame "github.com/guherbozdogan/mesos-go-http-client/client/frame"
 )
 
 // Client wraps a URL and provides a method that implements endpoint.Endpoint.
@@ -23,8 +24,11 @@ type Client struct {
 	dec            DecodeResponseFunc
 	before         []RequestFunc
 	after          []ClientResponseFunc
-	bufferedStream bool
+	afterFrame []ClientResponseFunc  //add/guherbozdogan/04/07/17 : for streaming responses
+	decFrame  frame.FrameIO //add/guherbozdogan/04/07/17 : for streaming responses
+    bufferedStream bool
 }
+
 
 // NewClient constructs a usable Client for a single remote method.
 func NewClient(
@@ -42,6 +46,8 @@ func NewClient(
 		dec:            dec,
 		before:         []RequestFunc{},
 		after:          []ClientResponseFunc{},
+		afterFrame:          []ClientResponseFunc{},
+		decFrame:            nil,
 		bufferedStream: false,
 	}
 	for _, option := range options {
@@ -70,6 +76,13 @@ func ClientBefore(before ...RequestFunc) ClientOption {
 // of the response and adding onto the context prior to decoding.
 func ClientAfter(after ...ClientResponseFunc) ClientOption {
 	return func(c *Client) { c.after = append(c.after, after...) }
+}
+
+// ClientAfterFrame  sets the ClientResponseFuncs applied to the incoming HTTP
+// response frame prior to it being decoded. This is useful for obtaining anything off
+// of the response's frame and adding onto the context prior to decoding.
+func ClientAfterFrame(after ...ClientResponseFunc) ClientOption {
+	return func(c *Client) { c.after = append(c.afterFrame, after...) }
 }
 
 // BufferedStream sets whether the Response.Body is left open, allowing it
@@ -104,10 +117,18 @@ func (c Client) Endpoint() endpoint.Endpoint {
 		if !c.bufferedStream {
 			defer resp.Body.Close()
 		}
+		
 
 		for _, f := range c.after {
 			ctx = f(ctx, resp)
 		}
+		
+		if c.bufferedStream {
+			defer func() { 
+				
+			} ()
+		}
+		
 
 		response, err := c.dec(ctx, resp)
 		if err != nil {
