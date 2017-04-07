@@ -22,11 +22,12 @@ type Client struct {
 	tgt            *url.URL
 	enc            EncodeRequestFunc
 	dec            DecodeResponseFunc
+	decFrame  frame.FrameReadFunc //add/guherbozdogan/04/07/17 : for streaming responses
 	before         []RequestFunc
 	after          []ClientResponseFunc
 	afterFrame []ClientResponseFunc  //add/guherbozdogan/04/07/17 : for streaming responses
-	decFrame  frame.FrameIO //add/guherbozdogan/04/07/17 : for streaming responses
-    bufferedStream bool
+	bufferedStream bool
+	frameIO  frame.FrameIO  //add/guherbozdogan/04/07/17 : for streaming responses
 }
 
 
@@ -36,6 +37,8 @@ func NewClient(
 	tgt *url.URL,
 	enc EncodeRequestFunc,
 	dec DecodeResponseFunc,
+	decFrame frame.FrameReadFunc,
+	frameIOType frame.FrameIOType ,  //add/guherbozdogan/04/07/17 : for streaming responses
 	options ...ClientOption,
 ) *Client {
 	c := &Client{
@@ -47,8 +50,11 @@ func NewClient(
 		before:         []RequestFunc{},
 		after:          []ClientResponseFunc{},
 		afterFrame:          []ClientResponseFunc{},
-		decFrame:            nil,
+		decFrame:            decFrame,
 		bufferedStream: false,
+		frameIO: nil	}
+	if c.bufferedStream {
+		c.frameIO=frame.NewFrameIO(frameIOType)
 	}
 	for _, option := range options {
 		option(c)
@@ -91,6 +97,12 @@ func BufferedStream(buffered bool) ClientOption {
 	return func(c *Client) { c.bufferedStream = buffered }
 }
 
+func (c Client) BufferedStreamHandler(ctx context.Context,r  *http.Response){
+	//rs,err:=c.frameIO.Read(ctx, r.Body,c.decFrame)
+	c.frameIO.Read(ctx, r.Body,c.decFrame)
+	
+	//some error handling for err.
+}
 // Endpoint returns a usable endpoint that invokes the remote endpoint.
 func (c Client) Endpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
@@ -123,16 +135,15 @@ func (c Client) Endpoint() endpoint.Endpoint {
 			ctx = f(ctx, resp)
 		}
 		
-		if c.bufferedStream {
-			defer func() { 
-				
-			} ()
-		}
+
 		
 
 		response, err := c.dec(ctx, resp)
 		if err != nil {
 			return nil, err
+		}
+		if c.bufferedStream {
+			go c.BufferedStreamHandler(ctx, resp)
 		}
 
 		return response, nil
