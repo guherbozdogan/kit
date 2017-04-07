@@ -25,7 +25,7 @@ type Client struct {
 	decFrame  frame.FrameReadFunc //add/guherbozdogan/04/07/17 : for streaming responses
 	before         []RequestFunc
 	after          []ClientResponseFunc
-	afterFrame []ClientResponseFunc  //add/guherbozdogan/04/07/17 : for streaming responses
+	afterFrame []frame.FrameReadFunc  //add/guherbozdogan/04/07/17 : for streaming responses
 	bufferedStream bool
 	frameIO  frame.FrameIO  //add/guherbozdogan/04/07/17 : for streaming responses
 	frameIOErrFunc frame.ErrorFunc //add/guherbozdogan/04/08/17 : for streaming responses
@@ -51,7 +51,7 @@ func NewClient(
 		dec:            dec,
 		before:         []RequestFunc{},
 		after:          []ClientResponseFunc{},
-		afterFrame:          []ClientResponseFunc{},
+		afterFrame:          []frame.FrameReadFunc{},
 		decFrame:            decFrame,
 		bufferedStream: false,
 		frameIO: nil,
@@ -90,9 +90,27 @@ func ClientAfter(after ...ClientResponseFunc) ClientOption {
 // ClientAfterFrame  sets the ClientResponseFuncs applied to the incoming HTTP
 // response frame prior to it being decoded. This is useful for obtaining anything off
 // of the response's frame and adding onto the context prior to decoding.
-func ClientAfterFrame(after ...ClientResponseFunc) ClientOption {
-	return func(c *Client) { c.after = append(c.afterFrame, after...) }
+func ClientAfterFrame(after ...frame.FrameReadFunc) ClientOption {
+	return func(c *Client) { c.afterFrame = append(c.afterFrame, after...) 
+		   c.decFrame= frame.DecorateFrameReadFunc([]frame.FrameReadFunc{},  c.afterFrame, c.decFrame)
+	   }
 }
+
+
+//add/guherbozdogan/04/07/17 : for streaming responses
+func (c Client) ChainFrameReadFunc(fn frame.FrameReadFunc)  frame.FrameReadFunc  {
+	return func (ctx context.Context, f frame.Frame,n  int64 )  context.Context	{
+	
+		ctx=fn(ctx, f, n)
+		for _, sf := range c.afterFrame {
+				ctx=sf(ctx, f, n)
+		}
+		return ctx;
+		
+			
+	}
+}
+	
 
 // BufferedStream sets whether the Response.Body is left open, allowing it
 // to be read from later. Useful for transporting a file as a buffered stream.
@@ -100,20 +118,15 @@ func BufferedStream(buffered bool) ClientOption {
 	return func(c *Client) { c.bufferedStream = buffered }
 }
 
+//add/guherbozdogan/04/07/17 : for streaming responses
 func (c Client) BufferedStreamHandler(ctx context.Context,r  *http.Response){
 	
 	ctx, cancel := context.WithCancel(ctx)
 	if !c.bufferedStream {
 		defer cancel()
 	}
-	
-	
 	c.frameIO.Read(ctx, r.Body,c.decFrame, c.frameIOErrFunc)
-		
-
 	
-	
-	//some error handling for err.
 }
 
 
