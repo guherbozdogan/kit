@@ -97,20 +97,6 @@ func ClientAfterFrame(after ...frame.FrameReadFunc) ClientOption {
 }
 
 
-//add/guherbozdogan/04/07/17 : for streaming responses
-func (c Client) ChainFrameReadFunc(fn frame.FrameReadFunc)  frame.FrameReadFunc  {
-	return func (ctx context.Context, f frame.Frame,n  int64 )  context.Context	{
-	
-		ctx=fn(ctx, f, n)
-		for _, sf := range c.afterFrame {
-				ctx=sf(ctx, f, n)
-		}
-		return ctx;
-		
-			
-	}
-}
-	
 
 // BufferedStream sets whether the Response.Body is left open, allowing it
 // to be read from later. Useful for transporting a file as a buffered stream.
