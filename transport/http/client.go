@@ -28,6 +28,7 @@ type Client struct {
 	afterFrame []ClientResponseFunc  //add/guherbozdogan/04/07/17 : for streaming responses
 	bufferedStream bool
 	frameIO  frame.FrameIO  //add/guherbozdogan/04/07/17 : for streaming responses
+	frameIOErrFunc frame.ErrorFunc //add/guherbozdogan/04/08/17 : for streaming responses
 }
 
 
@@ -39,6 +40,7 @@ func NewClient(
 	dec DecodeResponseFunc,
 	decFrame frame.FrameReadFunc,
 	frameIOType frame.FrameIOType ,  //add/guherbozdogan/04/07/17 : for streaming responses
+	frameIOErrFunc frame.ErrorFunc, //add/guherbozdogan/04/08/17 : for streaming responses
 	options ...ClientOption,
 ) *Client {
 	c := &Client{
@@ -52,7 +54,8 @@ func NewClient(
 		afterFrame:          []ClientResponseFunc{},
 		decFrame:            decFrame,
 		bufferedStream: false,
-		frameIO: nil	}
+		frameIO: nil,
+		frameIOErrFunc : frameIOErrFunc	}
 	if c.bufferedStream {
 		c.frameIO=frame.NewFrameIO(frameIOType)
 	}
@@ -98,15 +101,29 @@ func BufferedStream(buffered bool) ClientOption {
 }
 
 func (c Client) BufferedStreamHandler(ctx context.Context,r  *http.Response){
-	//rs,err:=c.frameIO.Read(ctx, r.Body,c.decFrame)
-	c.frameIO.Read(ctx, r.Body,c.decFrame)
-		//some error handling for err.
+	
+	ctx, cancel := context.WithCancel(ctx)
+	if !c.bufferedStream {
+		defer cancel()
+	}
+	
+	
+	c.frameIO.Read(ctx, r.Body,c.decFrame, c.frameIOErrFunc)
+		
+
+	
+	
+	//some error handling for err.
 }
+
+
 // Endpoint returns a usable endpoint that invokes the remote endpoint.
 func (c Client) Endpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		ctx, cancel := context.WithCancel(ctx)
+		if !c.bufferedStream {
 		defer cancel()
+		}
 
 		req, err := http.NewRequest(c.method, c.tgt.String(), nil)
 		if err != nil {
@@ -142,7 +159,8 @@ func (c Client) Endpoint() endpoint.Endpoint {
 			return nil, err
 		}
 		if c.bufferedStream {
-			go c.BufferedStreamHandler(ctx, resp)
+			ctxTmp := context.WithValue(context.Background(), "response", resp)
+			go c.BufferedStreamHandler(ctxTmp, resp)
 		}
 
 		return response, nil
