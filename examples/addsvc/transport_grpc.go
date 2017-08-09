@@ -16,7 +16,7 @@ import (
 )
 
 // MakeGRPCServer makes a set of endpoints available as a gRPC AddServer.
-func MakeGRPCServer(endpoints Endpoints, tracer stdopentracing.Tracer, logger log.Logger) pb.AddServer {
+func MakeGRPCServer(endpoints Endpoints, tracer stdopentracing.Tracer, logger log.Logger)pb.AddServer {
 	options := []grpctransport.ServerOption{
 		grpctransport.ServerErrorLogger(logger),
 	}

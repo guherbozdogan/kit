@@ -5,14 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"encoding/xml"
+	"github.com/go-kit/kit/endpoint"
+	frame "github.com/guherbozdogan/mesos-go-http-client/client/frame"
+	"golang.org/x/net/context/ctxhttp"
 	"io/ioutil"
 	"net/http"
 	"net/url"
-
-	"golang.org/x/net/context/ctxhttp"
-
-	"github.com/go-kit/kit/endpoint"
-	frame "github.com/guherbozdogan/mesos-go-http-client/client/frame"
 )
 
 // Client wraps a URL and provides a method that implements endpoint.Endpoint.
@@ -22,15 +20,14 @@ type Client struct {
 	tgt            *url.URL
 	enc            EncodeRequestFunc
 	dec            DecodeResponseFunc
-	decFrame  frame.FrameReadFunc //add/guherbozdogan/04/07/17 : for streaming responses
+	decFrame       frame.FrameReadFunc //add/guherbozdogan/04/07/17 : for streaming responses
 	before         []RequestFunc
 	after          []ClientResponseFunc
-	afterFrame []frame.FrameReadFunc  //add/guherbozdogan/04/07/17 : for streaming responses
+	afterFrame     []frame.FrameReadFunc //add/guherbozdogan/04/07/17 : for streaming responses
 	bufferedStream bool
-	frameIO  frame.FrameIO  //add/guherbozdogan/04/07/17 : for streaming responses
+	frameIO        frame.FrameIO   //add/guherbozdogan/04/07/17 : for streaming responses
 	frameIOErrFunc frame.ErrorFunc //add/guherbozdogan/04/08/17 : for streaming responses
 }
-
 
 // NewClient constructs a usable Client for a single remote method.
 func NewClient(
@@ -39,7 +36,7 @@ func NewClient(
 	enc EncodeRequestFunc,
 	dec DecodeResponseFunc,
 	decFrame frame.FrameReadFunc,
-	frameIOType frame.FrameIOType ,  //add/guherbozdogan/04/07/17 : for streaming responses
+	frameIOType frame.FrameIOType, //add/guherbozdogan/04/07/17 : for streaming responses
 	frameIOErrFunc frame.ErrorFunc, //add/guherbozdogan/04/08/17 : for streaming responses
 	options ...ClientOption,
 ) *Client {
@@ -51,13 +48,13 @@ func NewClient(
 		dec:            dec,
 		before:         []RequestFunc{},
 		after:          []ClientResponseFunc{},
-		afterFrame:          []frame.FrameReadFunc{},
-		decFrame:            decFrame,
+		afterFrame:     []frame.FrameReadFunc{},
+		decFrame:       decFrame,
 		bufferedStream: false,
-		frameIO: nil,
-		frameIOErrFunc : frameIOErrFunc	}
+		frameIO:        nil,
+		frameIOErrFunc: frameIOErrFunc}
 	if c.bufferedStream {
-		c.frameIO=frame.NewFrameIO(frameIOType)
+		c.frameIO = frame.NewFrameIO(frameIOType)
 	}
 	for _, option := range options {
 		option(c)
@@ -91,12 +88,11 @@ func ClientAfter(after ...ClientResponseFunc) ClientOption {
 // response frame prior to it being decoded. This is useful for obtaining anything off
 // of the response's frame and adding onto the context prior to decoding.
 func ClientAfterFrame(after ...frame.FrameReadFunc) ClientOption {
-	return func(c *Client) { c.afterFrame = append(c.afterFrame, after...) 
-		   c.decFrame= frame.DecorateFrameReadFunc([]frame.FrameReadFunc{},  c.afterFrame, c.decFrame)
-	   }
+	return func(c *Client) {
+		c.afterFrame = append(c.afterFrame, after...)
+		c.decFrame = frame.DecorateFrameReadFunc([]frame.FrameReadFunc{}, c.afterFrame, c.decFrame)
+	}
 }
-
-
 
 // BufferedStream sets whether the Response.Body is left open, allowing it
 // to be read from later. Useful for transporting a file as a buffered stream.
@@ -105,23 +101,22 @@ func BufferedStream(buffered bool) ClientOption {
 }
 
 //add/guherbozdogan/04/07/17 : for streaming responses
-func (c Client) BufferedStreamHandler(ctx context.Context,r  *http.Response){
-	
+func (c Client) BufferedStreamHandler(ctx context.Context, r *http.Response) {
+
 	ctx, cancel := context.WithCancel(ctx)
 	if !c.bufferedStream {
 		defer cancel()
 	}
-	c.frameIO.Read(ctx, r.Body,c.decFrame, c.frameIOErrFunc)
-	
-}
+	c.frameIO.Read(ctx, r.Body, c.decFrame, c.frameIOErrFunc)
 
+}
 
 // Endpoint returns a usable endpoint that invokes the remote endpoint.
 func (c Client) Endpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		ctx, cancel := context.WithCancel(ctx)
 		if !c.bufferedStream {
-		defer cancel()
+			defer cancel()
 		}
 
 		req, err := http.NewRequest(c.method, c.tgt.String(), nil)
@@ -144,21 +139,20 @@ func (c Client) Endpoint() endpoint.Endpoint {
 		if !c.bufferedStream {
 			defer resp.Body.Close()
 		}
-		
 
 		for _, f := range c.after {
 			ctx = f(ctx, resp)
 		}
-		
-
-		
 
 		response, err := c.dec(ctx, resp)
 		if err != nil {
 			return nil, err
 		}
 		if c.bufferedStream {
-			ctxTmp := context.WithValue(context.Background(), "response", resp)
+			//add/guherbozdogan/07/07/17 : for streaming responses
+			//ctxTmp := context.WithValue(context.Background(), "response", resp)
+			ctxTmp := context.WithValue(ctx, "response", resp)
+
 			go c.BufferedStreamHandler(ctxTmp, resp)
 		}
 

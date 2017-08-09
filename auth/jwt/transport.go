@@ -1,7 +1,7 @@
 package jwt
 
 import (
-	"context"
+	context "context"
 	"fmt"
 	stdhttp "net/http"
 	"strings"
