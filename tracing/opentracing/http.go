@@ -9,8 +9,8 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 
-	"github.com/go-kit/kit/log"
-	kithttp "github.com/go-kit/kit/transport/http"
+	"github.com/guherbozdogan/kit/log"
+	kithttp "github.com/guherbozdogan/kit/transport/http"
 )
 
 // ToHTTPRequest returns an http RequestFunc that injects an OpenTracing Span

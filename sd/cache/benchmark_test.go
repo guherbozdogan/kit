@@ -4,8 +4,8 @@ import (
 	"io"
 	"testing"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
 )
 
 func BenchmarkEndpoints(b *testing.B) {

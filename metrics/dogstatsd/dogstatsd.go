@@ -16,11 +16,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/metrics"
-	"github.com/go-kit/kit/metrics/internal/lv"
-	"github.com/go-kit/kit/metrics/internal/ratemap"
-	"github.com/go-kit/kit/util/conn"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/metrics"
+	"github.com/guherbozdogan/kit/metrics/internal/lv"
+	"github.com/guherbozdogan/kit/metrics/internal/ratemap"
+	"github.com/guherbozdogan/kit/util/conn"
 )
 
 // Dogstatsd receives metrics observations and forwards them to a DogStatsD

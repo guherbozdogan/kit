@@ -16,10 +16,10 @@ test:
   pre:
     - mkdir -p /home/ubuntu/.go_workspace/src/github.com/go-kit
     - mv /home/ubuntu/kit /home/ubuntu/.go_workspace/src/github.com/go-kit
-    - ln -s /home/ubuntu/.go_workspace/src/github.com/go-kit/kit /home/ubuntu/kit
-    - go get github.com/go-kit/kit/...
+    - ln -s /home/ubuntu/.go_workspace/src/github.com/guherbozdogan/kit /home/ubuntu/kit
+    - go get github.com/guherbozdogan/kit/...
   override:
-    - go test -v -race -tags integration github.com/go-kit/kit/...:
+    - go test -v -race -tags integration github.com/guherbozdogan/kit/...:
         environment:
           ETCD_ADDR: http://localhost:2379
           CONSUL_ADDR: localhost:8500

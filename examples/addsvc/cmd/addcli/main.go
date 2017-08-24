@@ -17,12 +17,12 @@ import (
 	"sourcegraph.com/sourcegraph/appdash"
 	appdashot "sourcegraph.com/sourcegraph/appdash/opentracing"
 
-	"github.com/go-kit/kit/examples/addsvc"
-	grpcclient "github.com/go-kit/kit/examples/addsvc/client/grpc"
-	httpclient "github.com/go-kit/kit/examples/addsvc/client/http"
-	thriftclient "github.com/go-kit/kit/examples/addsvc/client/thrift"
-	thriftadd "github.com/go-kit/kit/examples/addsvc/thrift/gen-go/addsvc"
-	"github.com/go-kit/kit/log"
+	"github.com/guherbozdogan/kit/examples/addsvc"
+	grpcclient "github.com/guherbozdogan/kit/examples/addsvc/client/grpc"
+	httpclient "github.com/guherbozdogan/kit/examples/addsvc/client/http"
+	thriftclient "github.com/guherbozdogan/kit/examples/addsvc/client/thrift"
+	thriftadd "github.com/guherbozdogan/kit/examples/addsvc/thrift/gen-go/addsvc"
+	"github.com/guherbozdogan/kit/log"
 )
 
 func main() {

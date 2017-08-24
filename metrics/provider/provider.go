@@ -24,7 +24,7 @@
 package provider
 
 import (
-	"github.com/go-kit/kit/metrics"
+	"github.com/guherbozdogan/kit/metrics"
 )
 
 // Provider abstracts over constructors and lifecycle management functions for

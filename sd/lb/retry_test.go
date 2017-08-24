@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/sd"
-	"github.com/go-kit/kit/sd/lb"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/sd"
+	"github.com/guherbozdogan/kit/sd/lb"
 )
 
 func TestRetryMaxTotalFail(t *testing.T) {

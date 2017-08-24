@@ -13,9 +13,9 @@ import (
 
 	stdopentracing "github.com/opentracing/opentracing-go"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/tracing/opentracing"
-	httptransport "github.com/go-kit/kit/transport/http"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/tracing/opentracing"
+	httptransport "github.com/guherbozdogan/kit/transport/http"
 )
 
 // MakeHTTPHandler returns a handler that makes a set of endpoints available

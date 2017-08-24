@@ -3,7 +3,7 @@
 This is a coarse-grained roadmap of Go kit development direction in the short
 to mid-term future. It will be kept reasonably up-to-date by the project
 maintainers. Suggest new ideas, enhancements, and features using the standard
-[issues](https://github.com/go-kit/kit/issues) model.
+[issues](https://github.com/guherbozdogan/kit/issues) model.
 
 ## Prioritized
 

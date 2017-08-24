@@ -5,12 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"encoding/xml"
-	"github.com/go-kit/kit/endpoint"
+	"github.com/guherbozdogan/kit/endpoint"
 	frame "github.com/guherbozdogan/mesos-go-http-client/client/frame"
 	"golang.org/x/net/context/ctxhttp"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // Client wraps a URL and provides a method that implements endpoint.Endpoint.
@@ -35,6 +36,33 @@ func NewClient(
 	tgt *url.URL,
 	enc EncodeRequestFunc,
 	dec DecodeResponseFunc,
+	options ...ClientOption,
+) *Client {
+	c := &Client{
+		client:         http.DefaultClient,
+		method:         method,
+		tgt:            tgt,
+		enc:            enc,
+		dec:            dec,
+		before:         []RequestFunc{},
+		after:          []ClientResponseFunc{},
+		afterFrame:     []frame.FrameReadFunc{},
+		decFrame:       nil,
+		bufferedStream: false,
+		frameIO:        nil,
+		frameIOErrFunc: nil}
+
+	for _, option := range options {
+		option(c)
+	}
+	return c
+}
+
+func NewBSClient(
+	method string,
+	tgt *url.URL,
+	enc EncodeRequestFunc,
+	dec DecodeResponseFunc,
 	decFrame frame.FrameReadFunc,
 	frameIOType frame.FrameIOType, //add/guherbozdogan/04/07/17 : for streaming responses
 	frameIOErrFunc frame.ErrorFunc, //add/guherbozdogan/04/08/17 : for streaming responses
@@ -50,12 +78,17 @@ func NewClient(
 		after:          []ClientResponseFunc{},
 		afterFrame:     []frame.FrameReadFunc{},
 		decFrame:       decFrame,
-		bufferedStream: false,
+		bufferedStream: true,
 		frameIO:        nil,
 		frameIOErrFunc: frameIOErrFunc}
-	if c.bufferedStream {
-		c.frameIO = frame.NewFrameIO(frameIOType)
+	c.frameIO = frame.NewFrameIO(frameIOType)
+	c.client = &http.Client{Transport: &http.Transport{
+		MaxIdleConnsPerHost: 1000000,
+	},
+		//later fix all these
+		Timeout: time.Duration(100000000) * time.Second,
 	}
+
 	for _, option := range options {
 		option(c)
 	}

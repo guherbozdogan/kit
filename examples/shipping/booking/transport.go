@@ -9,11 +9,11 @@ import (
 
 	"github.com/gorilla/mux"
 
-	kitlog "github.com/go-kit/kit/log"
-	kithttp "github.com/go-kit/kit/transport/http"
+	kitlog "github.com/guherbozdogan/kit/log"
+	kithttp "github.com/guherbozdogan/kit/transport/http"
 
-	"github.com/go-kit/kit/examples/shipping/cargo"
-	"github.com/go-kit/kit/examples/shipping/location"
+	"github.com/guherbozdogan/kit/examples/shipping/cargo"
+	"github.com/guherbozdogan/kit/examples/shipping/location"
 )
 
 // MakeHandler returns a handler for the booking service.

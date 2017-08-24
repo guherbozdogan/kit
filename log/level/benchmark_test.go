@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/log/level"
 )
 
 func Benchmark(b *testing.B) {

@@ -7,8 +7,8 @@ import (
 
 	stdetcd "github.com/coreos/etcd/client"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
 )
 
 var (

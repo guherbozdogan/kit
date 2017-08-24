@@ -5,9 +5,9 @@ import (
 	"io"
 	"time"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/sd/lb"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/sd/lb"
 )
 
 func Example() {

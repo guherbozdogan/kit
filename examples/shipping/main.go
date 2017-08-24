@@ -14,17 +14,17 @@ import (
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
-	"github.com/go-kit/kit/log"
-	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
+	"github.com/guherbozdogan/kit/log"
+	kitprometheus "github.com/guherbozdogan/kit/metrics/prometheus"
 
-	"github.com/go-kit/kit/examples/shipping/booking"
-	"github.com/go-kit/kit/examples/shipping/cargo"
-	"github.com/go-kit/kit/examples/shipping/handling"
-	"github.com/go-kit/kit/examples/shipping/inmem"
-	"github.com/go-kit/kit/examples/shipping/inspection"
-	"github.com/go-kit/kit/examples/shipping/location"
-	"github.com/go-kit/kit/examples/shipping/routing"
-	"github.com/go-kit/kit/examples/shipping/tracking"
+	"github.com/guherbozdogan/kit/examples/shipping/booking"
+	"github.com/guherbozdogan/kit/examples/shipping/cargo"
+	"github.com/guherbozdogan/kit/examples/shipping/handling"
+	"github.com/guherbozdogan/kit/examples/shipping/inmem"
+	"github.com/guherbozdogan/kit/examples/shipping/inspection"
+	"github.com/guherbozdogan/kit/examples/shipping/location"
+	"github.com/guherbozdogan/kit/examples/shipping/routing"
+	"github.com/guherbozdogan/kit/examples/shipping/tracking"
 )
 
 const (

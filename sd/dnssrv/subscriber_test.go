@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
 )
 
 func TestRefresh(t *testing.T) {

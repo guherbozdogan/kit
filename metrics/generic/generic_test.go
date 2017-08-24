@@ -10,8 +10,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/go-kit/kit/metrics/generic"
-	"github.com/go-kit/kit/metrics/teststat"
+	"github.com/guherbozdogan/kit/metrics/generic"
+	"github.com/guherbozdogan/kit/metrics/teststat"
 )
 
 func TestCounter(t *testing.T) {

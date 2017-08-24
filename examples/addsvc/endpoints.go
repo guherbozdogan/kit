@@ -10,9 +10,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/metrics"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/metrics"
 )
 
 // Endpoints collects all of the endpoints that compose an add service. It's

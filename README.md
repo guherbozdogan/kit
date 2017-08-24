@@ -1,4 +1,4 @@
-# Go kit [![Circle CI](https://circleci.com/gh/go-kit/kit.svg?style=svg)](https://circleci.com/gh/go-kit/kit) [![Travis CI](https://travis-ci.org/go-kit/kit.svg?branch=master)](https://travis-ci.org/go-kit/kit) [![GoDoc](https://godoc.org/github.com/go-kit/kit?status.svg)](https://godoc.org/github.com/go-kit/kit) [![Coverage Status](https://coveralls.io/repos/go-kit/kit/badge.svg?branch=master&service=github)](https://coveralls.io/github/go-kit/kit?branch=master) [![Go Report Card](https://goreportcard.com/badge/go-kit/kit)](https://goreportcard.com/report/go-kit/kit) [![Sourcegraph](https://sourcegraph.com/github.com/go-kit/kit/-/badge.svg)](https://sourcegraph.com/github.com/go-kit/kit?badge)
+# Go kit [![Circle CI](https://circleci.com/gh/go-kit/kit.svg?style=svg)](https://circleci.com/gh/go-kit/kit) [![Travis CI](https://travis-ci.org/go-kit/kit.svg?branch=master)](https://travis-ci.org/go-kit/kit) [![GoDoc](https://godoc.org/github.com/guherbozdogan/kit?status.svg)](https://godoc.org/github.com/guherbozdogan/kit) [![Coverage Status](https://coveralls.io/repos/go-kit/kit/badge.svg?branch=master&service=github)](https://coveralls.io/github/go-kit/kit?branch=master) [![Go Report Card](https://goreportcard.com/badge/go-kit/kit)](https://goreportcard.com/report/go-kit/kit) [![Sourcegraph](https://sourcegraph.com/github.com/guherbozdogan/kit/-/badge.svg)](https://sourcegraph.com/github.com/guherbozdogan/kit?badge)
 
 **Go kit** is a **distributed programming toolkit** for building microservices
 in large organizations. We solve common problems in distributed systems, so
@@ -45,7 +45,7 @@ See also the
 ## Contributing
 
 Please see [CONTRIBUTING.md](/CONTRIBUTING.md).
-Thank you, [contributors](https://github.com/go-kit/kit/graphs/contributors)!
+Thank you, [contributors](https://github.com/guherbozdogan/kit/graphs/contributors)!
 
 ## Dependency management
 
@@ -108,7 +108,7 @@ Projects with a ★ have had particular influence on Go kit's design (or vice-ve
 - [Goji](https://github.com/zenazn/goji)
 - [Martini](https://github.com/go-martini/martini)
 - [Beego](http://beego.me/)
-- [Revel](https://revel.github.io/) (considered [harmful](https://github.com/go-kit/kit/issues/350))
+- [Revel](https://revel.github.io/) (considered [harmful](https://github.com/guherbozdogan/kit/issues/350))
 
 ## Additional reading
 

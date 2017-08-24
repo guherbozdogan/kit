@@ -9,9 +9,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/aws/aws-sdk-go/service/cloudwatch/cloudwatchiface"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/metrics"
-	"github.com/go-kit/kit/metrics/generic"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/metrics"
+	"github.com/guherbozdogan/kit/metrics/generic"
 )
 
 // CloudWatch receives metrics observations and forwards them to CloudWatch.

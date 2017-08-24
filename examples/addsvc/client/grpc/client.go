@@ -9,14 +9,14 @@ import (
 	"github.com/sony/gobreaker"
 	"google.golang.org/grpc"
 
-	"github.com/go-kit/kit/circuitbreaker"
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/examples/addsvc"
-	"github.com/go-kit/kit/examples/addsvc/pb"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/ratelimit"
-	"github.com/go-kit/kit/tracing/opentracing"
-	grpctransport "github.com/go-kit/kit/transport/grpc"
+	"github.com/guherbozdogan/kit/circuitbreaker"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/examples/addsvc"
+	"github.com/guherbozdogan/kit/examples/addsvc/pb"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/ratelimit"
+	"github.com/guherbozdogan/kit/tracing/opentracing"
+	grpctransport "github.com/guherbozdogan/kit/transport/grpc"
 )
 
 // New returns an AddService backed by a gRPC client connection. It is the

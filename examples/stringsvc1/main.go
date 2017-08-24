@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/go-kit/kit/endpoint"
-	httptransport "github.com/go-kit/kit/transport/http"
+	"github.com/guherbozdogan/kit/endpoint"
+	httptransport "github.com/guherbozdogan/kit/transport/http"
 )
 
 // StringService provides operations on strings.

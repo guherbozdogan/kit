@@ -11,13 +11,13 @@ import (
 	jujuratelimit "github.com/juju/ratelimit"
 	"github.com/sony/gobreaker"
 
-	"github.com/go-kit/kit/circuitbreaker"
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/ratelimit"
-	"github.com/go-kit/kit/sd"
-	"github.com/go-kit/kit/sd/lb"
-	httptransport "github.com/go-kit/kit/transport/http"
+	"github.com/guherbozdogan/kit/circuitbreaker"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/ratelimit"
+	"github.com/guherbozdogan/kit/sd"
+	"github.com/guherbozdogan/kit/sd/lb"
+	httptransport "github.com/guherbozdogan/kit/transport/http"
 )
 
 func proxyingMiddleware(ctx context.Context, instances string, logger log.Logger) ServiceMiddleware {

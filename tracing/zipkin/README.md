@@ -109,8 +109,8 @@ tracer, err = zipkin.NewTracer(
 ```
 
 [zipkin-go-opentracing]: https://github.com/openzipkin/zipkin-go-opentracing
-[addsvc]:https://github.com/go-kit/kit/tree/master/examples/addsvc
-[Log]: https://github.com/go-kit/kit/tree/master/log
+[addsvc]:https://github.com/guherbozdogan/kit/tree/master/examples/addsvc
+[Log]: https://github.com/guherbozdogan/kit/tree/master/log
 
 ### Tracing Resources
 

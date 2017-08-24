@@ -20,14 +20,14 @@ import (
 	"github.com/hashicorp/consul/api"
 	stdopentracing "github.com/opentracing/opentracing-go"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/examples/addsvc"
-	addsvcgrpcclient "github.com/go-kit/kit/examples/addsvc/client/grpc"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/sd"
-	consulsd "github.com/go-kit/kit/sd/consul"
-	"github.com/go-kit/kit/sd/lb"
-	httptransport "github.com/go-kit/kit/transport/http"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/examples/addsvc"
+	addsvcgrpcclient "github.com/guherbozdogan/kit/examples/addsvc/client/grpc"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/sd"
+	consulsd "github.com/guherbozdogan/kit/sd/consul"
+	"github.com/guherbozdogan/kit/sd/lb"
+	httptransport "github.com/guherbozdogan/kit/transport/http"
 	"google.golang.org/grpc"
 )
 

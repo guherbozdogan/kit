@@ -5,10 +5,10 @@ import (
 	"net"
 	"time"
 
-	"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/sd"
-	"github.com/go-kit/kit/sd/cache"
+	"github.com/guherbozdogan/kit/endpoint"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/sd"
+	"github.com/guherbozdogan/kit/sd/cache"
 )
 
 // Subscriber yields endpoints taken from the named DNS SRV record. The name is

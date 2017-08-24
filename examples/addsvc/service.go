@@ -8,8 +8,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/metrics"
+	"github.com/guherbozdogan/kit/log"
+	"github.com/guherbozdogan/kit/metrics"
 )
 
 // Service describes a service that adds things together.

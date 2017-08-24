@@ -43,8 +43,8 @@ development environment and a [README] detailing how to transition from the
 old package to the new.
 
 [Dapper]: http://research.google.com/pubs/pub36356.html
-[addsvc]:https://github.com/go-kit/kit/tree/master/examples/addsvc
-[README]: https://github.com/go-kit/kit/blob/master/tracing/zipkin/README.md
+[addsvc]:https://github.com/guherbozdogan/kit/tree/master/examples/addsvc
+[README]: https://github.com/guherbozdogan/kit/blob/master/tracing/zipkin/README.md
 
 [OpenTracing]: http://opentracing.io
 [opentracing-go]: https://github.com/opentracing/opentracing-go

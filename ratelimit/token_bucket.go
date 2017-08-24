@@ -7,7 +7,7 @@ import (
 
 	"github.com/juju/ratelimit"
 
-	"github.com/go-kit/kit/endpoint"
+	"github.com/guherbozdogan/kit/endpoint"
 )
 
 // ErrLimited is returned in the request path when the rate limiter is

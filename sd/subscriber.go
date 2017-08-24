@@ -1,6 +1,6 @@
 package sd
 
-import "github.com/go-kit/kit/endpoint"
+import "github.com/guherbozdogan/kit/endpoint"
 
 // Subscriber listens to a service discovery system and yields a set of
 // identical endpoints on demand. An error indicates a problem with connectivity

@@ -6,7 +6,7 @@ import (
 
 	consul "github.com/hashicorp/consul/api"
 
-	"github.com/go-kit/kit/log"
+	"github.com/guherbozdogan/kit/log"
 )
 
 var consulState = []*consul.ServiceEntry{
